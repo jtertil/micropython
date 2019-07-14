@@ -28,6 +28,16 @@ def space_w():
     led.on()
     time.sleep(3.5)
 
+def err_blink(num):
+    while True:
+        for i in range(num):
+            led.on()
+            time.sleep(0.2)
+            led.off()
+            time.sleep(0.2)
+        led.on()
+        time.sleep(1)
+
 MORSE_DICT = { 'A':'.-', 'B':'-...',
    'C':'-.-.', 'D':'-..', 'E':'.',
    'F':'..-.', 'G':'--.', 'H':'....',
@@ -45,7 +55,13 @@ MORSE_DICT = { 'A':'.-', 'B':'-...',
    '(':'-.--.', ')':'-.--.-'
 }
 
-message = 'HELLO WORLD'
+try:
+    file = open('message.txt', 'r')
+    message = file.readline().rstrip('\n')
+except OSError:
+    err_blink(5)
+
+# message = 'HELLO WORLD'
 morse = ''
 
 for letter in message:
