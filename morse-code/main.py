@@ -45,13 +45,13 @@ MORSE_DICT = { 'A':'.-', 'B':'-...',
    '(':'-.--.', ')':'-.--.-'
 }
 
-message = ['HELLO WORLD']
-morse = ['']
+message = 'HELLO WORLD'
+morse = ''
 
-for letter in in message:
+for letter in message:
     if letter in MORSE_DICT:
         morse += MORSE_DICT[letter] + ' ' 
-     elif letter == ' ':
+    elif letter == ' ':
         morse += '/'
 
 led.on()
