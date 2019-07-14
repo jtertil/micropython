@@ -28,18 +28,42 @@ def space_w():
     led.on()
     time.sleep(3.5)
 
+MORSE_DICT = { 'A':'.-', 'B':'-...',
+   'C':'-.-.', 'D':'-..', 'E':'.',
+   'F':'..-.', 'G':'--.', 'H':'....',
+   'I':'..', 'J':'.---', 'K':'-.-',
+   'L':'.-..', 'M':'--', 'N':'-.',
+   'O':'---', 'P':'.--.', 'Q':'--.-',
+   'R':'.-.', 'S':'...', 'T':'-',
+   'U':'..-', 'V':'...-', 'W':'.--',
+   'X':'-..-', 'Y':'-.--', 'Z':'--..',
+   '1':'.----', '2':'..---', '3':'...--',
+   '4':'....-', '5':'.....', '6':'-....',
+   '7':'--...', '8':'---..', '9':'----.',
+   '0':'-----', ', ':'--..--', '.':'.-.-.-',
+   '?':'..--..', '/':'-..-.', '-':'-....-',
+   '(':'-.--.', ')':'-.--.-'
+}
 
-message = ['...', '---', '...']
+message = ['HELLO WORLD']
+morse = ['']
+
+for letter in in message:
+    if letter in MORSE_DICT:
+        morse += MORSE_DICT[letter] + ' ' 
+     elif letter == ' ':
+        morse += '/'
 
 led.on()
 
 while True:
-    for letter in message:
-        for s in letter:
-            if s == '.':
-                dot()
-            elif s == '-':
-                dash()
-        space()
-    space_w()
+    for s in morse:
+        if s == '.':
+            dot()
+        elif s == '-':
+            dash()
+        elif s == ' ':
+            space()
+        elif s == '/':
+            space_w()
 
