@@ -1,15 +1,21 @@
+import time
 import network
-import machine
-import dht
 
 import urequests
-import time
 import setup
 
-# config
-led = machine.Pin(setup.LED_PIN, machine.Pin.OUT)
-sensor = dht.DHT22(machine.Pin(setup.DHT22_PIN))
+from machine import Pin, I2C
+from dht import DHT22
+from ssd1306 import SSD1306_I2C
 
+
+led = Pin(setup.LED_PIN, Pin.OUT)
+sensor = DHT22(Pin(setup.DHT22_PIN))
+i2c = I2C(
+    scl=Pin(setup.I2C_SCL_PIN),
+    sda=Pin(setup.I2C_SDA_PIN))
+i2c.scan()
+display = SSD1306_I2C(128, 64, i2c)
 
 
 def wifi_connect():
@@ -46,10 +52,18 @@ def log_data(temperature, humidity):
         print('Request error: ', err)
 
 
+def display_data(temperature, humidity):
+    display.fill(0)
+    display.text('temp.: {} C'.format(temperature), 0, 0)
+    display.text('humidity: {} %'.format(humidity), 0, 32)
+    display.show()
+
+
 def run():
     while True:
         wifi_connect()
         t, h = read()
+        display_data(t, h)
         log_data(t, h)
         time.sleep(setup.READ_INTERV * 60)
 
